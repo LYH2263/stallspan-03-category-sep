@@ -146,3 +146,21 @@ th { color: var(--ss-muted); font-weight: 700; font-size: 0.78rem; }
 
 .stall-strip { display: flex; height: 56px; border: 2px solid var(--ss-curb); overflow: hidden; margin: 0.75rem 0; background: #3a3126; }
 .stall-cell { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; border-right: 1px solid rgba(255,255,255,0.08); overflow: hidden; white-space: nowrap; }
+
+/* 品类口径：圆点 / 图例（餐饮 · 手作 · 挡柱） */
+.ss-cat-dot {
+  display: inline-block; width: 0.62rem; height: 0.62rem;
+  border-radius: 50%; margin-right: 0.25rem;
+  border: 1px solid rgba(26,20,14,0.35); vertical-align: -0.04rem;
+}
+.ss-cat-dot.ss-cat-pillar { background: var(--ss-pillar); }
+.ss-legend {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  font-size: 0.78rem; color: var(--ss-muted);
+  margin-bottom: 0.5rem;
+}
+select {
+  font: inherit; padding: 0.2rem 0.35rem;
+  border: 1px solid var(--ss-curb); border-radius: 3px;
+  background: #fff7e6; color: var(--ss-ink);
+}

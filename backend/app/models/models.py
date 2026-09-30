@@ -23,6 +23,8 @@ class Vendor(Base):
     name: Mapped[str] = mapped_column(String(64))
     stall_width_m: Mapped[float] = mapped_column(Float)
     priority: Mapped[int] = mapped_column(Integer, default=1)
+    # 品类（餐饮 / 手作，枚举可扩）；None 表示未标，按手作兼容
+    category: Mapped[str | None] = mapped_column(String(16), nullable=True)
 
 class Pillar(Base):
     __tablename__ = "pillars"

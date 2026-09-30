@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect, text
 
 from app.api.router import api_router
 from app.config import settings
@@ -9,9 +10,18 @@ from app.database import Base, SessionLocal, engine
 from app.services.seed import seed_if_empty
 
 
+def ensure_schema() -> None:
+    """无迁移工具：对存量库补齐后加列（create_all 不会改已存在的表）。"""
+    insp = inspect(engine)
+    if "vendors" in insp.get_table_names() and "category" not in [c["name"] for c in insp.get_columns("vendors")]:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE vendors ADD COLUMN category VARCHAR(32) NOT NULL DEFAULT 'handmade'"))
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    ensure_schema()
     if settings.seed_on_empty:
         db = SessionLocal()
         try:
